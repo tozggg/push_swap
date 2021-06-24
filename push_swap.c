@@ -6,15 +6,12 @@
 /*   By: taejkim <taejkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 20:40:31 by taejkim           #+#    #+#             */
-/*   Updated: 2021/06/23 20:11:07 by taejkim          ###   ########.fr       */
+/*   Updated: 2021/06/24 18:13:02 by taejkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdlib.h>
-
-#define INT_MAX 2147483647
-#define INT_MIN -2147473648
 
 typedef struct		s_node
 {
@@ -205,10 +202,23 @@ void	command_swap(t_stack *stack)
 	stack->head = second;
 }
 
+void	command_sa(t_stack *stack_a)
+{
+	command_swap(stack_a);
+	write(1, "sa\n", 3);
+}
+
+void	command_sb(t_stack *stack_b)
+{
+	command_swap(stack_b);
+	write(1, "sb\n", 3);
+}
+
 void	command_ss(t_stack *stack_a, t_stack *stack_b)
 {
 	command_swap(stack_a);
 	command_swap(stack_b);
+	write(1, "ss\n", 3);
 }
 
 void	command_pa(t_stack *stack_a, t_stack *stack_b)
@@ -227,6 +237,7 @@ void	command_pa(t_stack *stack_a, t_stack *stack_b)
 	stack_a->head = node;
 	++(stack_a->size);
 	--(stack_b->size);
+	write(1, "pa\n", 3);
 }
 
 void	command_pb(t_stack *stack_a, t_stack *stack_b)
@@ -245,6 +256,7 @@ void	command_pb(t_stack *stack_a, t_stack *stack_b)
 	stack_b->head = node;
 	++(stack_b->size);
 	--(stack_a->size);
+	write(1, "pb\n", 3);
 }
 
 void	command_rotate(t_stack *stack)
@@ -265,10 +277,23 @@ void	command_rotate(t_stack *stack)
 	top->next = NULL;
 }
 
+void	command_ra(t_stack *stack_a)
+{
+	command_rotate(stack_a);
+	write(1, "ra\n", 3);
+}
+
+void	command_rb(t_stack *stack_b)
+{
+	command_rotate(stack_b);
+	write(1, "rb\n", 3);
+}
+
 void	command_rr(t_stack *stack_a, t_stack *stack_b)
 {
 	command_rotate(stack_a);
 	command_rotate(stack_b);
+	write(1, "rr\n", 3);
 }
 
 void	command_reverse_rotate(t_stack *stack)
@@ -288,10 +313,23 @@ void	command_reverse_rotate(t_stack *stack)
 	stack->head = tmp;
 }
 
+void	command_rra(t_stack *stack_a)
+{
+	command_reverse_rotate(stack_a);
+	write(1, "rra\n", 4);
+}
+
+void	command_rrb(t_stack *stack_b)
+{
+	command_reverse_rotate(stack_b);
+	write(1, "rrb\n", 4);
+}
+
 void	command_rrr(t_stack *stack_a, t_stack *stack_b)
 {
 	command_reverse_rotate(stack_a);
 	command_reverse_rotate(stack_b);
+	write(1, "rrr\n", 4);
 }
 
 //---------------------------------------------------------------------------function
@@ -350,7 +388,7 @@ int		ft_atoi(char *str, t_stack *stack, char **split)
 	}
 	if (is_duplicated_data(stack, res))
 			free_and_error(stack, split);
-	return ((int)res);
+	return ((int)(res * pos));
 }
 
 void	add_split_to_stack(t_stack *stack, char **split)
@@ -403,6 +441,13 @@ t_stack	*make_stack_a(int ac, char *av[])
 	return (stack);
 }
 
+
+void	push_swap(t_stack *stack_a, t_stack *stack_b)
+{
+	
+}
+
+
 #include <stdio.h>
 
 int		main(int ac, char *av[])
@@ -415,7 +460,8 @@ int		main(int ac, char *av[])
 		error();
 	init_stack(stack_b);
 
-	
+	push_swap(stack_a, stack_b);
+	/*
 	//-------------------------------------
 	command_reverse_rotate(stack_a);
 	
@@ -445,6 +491,7 @@ int		main(int ac, char *av[])
 		
 	}
 	//-----------------------------------
+	*/
 
 	free_stack(stack_a);
 	free_stack(stack_b);
