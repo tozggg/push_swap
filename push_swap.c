@@ -6,12 +6,21 @@
 /*   By: taejkim <taejkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 20:40:31 by taejkim           #+#    #+#             */
-/*   Updated: 2021/06/24 18:13:02 by taejkim          ###   ########.fr       */
+/*   Updated: 2021/06/26 09:59:13 by taejkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdlib.h>
+
+#define ASC 1
+#define DESC 0
+
+typedef struct		s_stack
+{
+	struct s_node	*head;
+	int				size;
+}					t_stack;
 
 typedef struct		s_node
 {
@@ -20,13 +29,19 @@ typedef struct		s_node
 	struct s_node	*prev;
 }					t_node;
 
-typedef struct		s_stack
+typedef struct		s_part
 {
-	struct s_node	*head;
-	int				size;
-}					t_stack;
+	int				half_pivot;
+	int				one_third_pivot;
+	int				two_third_pivot;
+	int				pa_count;
+	int				pb_count;
+	int				ra_count;
+	int				rb_count;
+}					t_part;
 
-//---------------------------------------------------------------------------isdigit
+
+//---------------------------------------------------------------------------libft
 
 int		ft_isdigit(char c)
 {
@@ -34,6 +49,24 @@ int		ft_isdigit(char c)
 		return (1);
 	else
 		return (0);
+}
+
+int		ft_strlen(char *str)
+{
+	int		len;
+
+	len = 0;
+	while (str[len])
+		++len;
+	return (len);
+}
+
+void	ft_putstr(char *str)
+{
+	int		len;
+
+	len = ft_strlen(str);
+	write(1, str, len);
 }
 
 //---------------------------------------------------------------------------split
@@ -154,7 +187,7 @@ char		**ft_split(char const *s, char c)
 
 // --------------------------------------------------------------------------utils
 
-void	error(void)
+void	print_error(void)
 {
 	write(2, "Error\n", 6);
 	exit(1);
@@ -181,12 +214,12 @@ void	free_and_error(t_stack *stack, char **split)
 {
 	free_split(split);
 	free_stack(stack);
-	error();
+	print_error();
 }
 
 //---------------------------------------------------------------------------command
 
-void	command_swap(t_stack *stack)
+void	do_swap(t_stack *stack)
 {
 	t_node	*top;
 	t_node	*second;
@@ -202,64 +235,66 @@ void	command_swap(t_stack *stack)
 	stack->head = second;
 }
 
-void	command_sa(t_stack *stack_a)
+void	do_sa(t_stack *a)
 {
-	command_swap(stack_a);
-	write(1, "sa\n", 3);
+	do_swap(a);
+	ft_putstr("sa\n");
 }
 
-void	command_sb(t_stack *stack_b)
+void	do_sb(t_stack *b)
 {
-	command_swap(stack_b);
-	write(1, "sb\n", 3);
+	do_swap(b);
+	ft_putstr("sb\n");
 }
 
-void	command_ss(t_stack *stack_a, t_stack *stack_b)
+void	do_ss(t_stack *a, t_stack *b)
 {
-	command_swap(stack_a);
-	command_swap(stack_b);
-	write(1, "ss\n", 3);
+	do_swap(a);
+	do_swap(b);
+	ft_putstr("ss\n");
 }
 
-void	command_pa(t_stack *stack_a, t_stack *stack_b)
+int		do_pa(t_stack *a, t_stack *b)
 {
 	t_node *node;
 	
-	if (stack_b->size == 0)
+	if (b->size == 0)
 		return ;
-	node = stack_b->head;
-	stack_b->head = node->next;
-	if (stack_b->head)
-		stack_b->head->prev = NULL;
-	node->next = stack_a->head;
-	if (stack_a->head)
-		stack_a->head->prev = node;
-	stack_a->head = node;
-	++(stack_a->size);
-	--(stack_b->size);
-	write(1, "pa\n", 3);
+	node = b->head;
+	b->head = node->next;
+	if (b->head)
+		b->head->prev = NULL;
+	node->next = a->head;
+	if (a->head)
+		a->head->prev = node;
+	a->head = node;
+	++(a->size);
+	--(b->size);
+	ft_putstr("pa\n");
+	return (1);
 }
 
-void	command_pb(t_stack *stack_a, t_stack *stack_b)
+int		do_pb(t_stack *a, t_stack *b)
 {
 	t_node *node;
 
-	if (stack_a->size == 0)
+	if (a->size == 0)
 		return ;
-	node = stack_a->head;
-	stack_a->head = node->next;
-	if (stack_a->head)
-		stack_a->head->prev = NULL;
-	node->next = stack_b->head;
-	if (stack_b->head)
-		stack_b->head->prev = node;
-	stack_b->head = node;
-	++(stack_b->size);
-	--(stack_a->size);
-	write(1, "pb\n", 3);
+	node = a->head;
+	a->head = node->next;
+	if (a->head)
+		a->head->prev = NULL;
+	node->next = b->head;
+	if (b->head)
+		b->head->prev = node;
+	b->head = node;
+	++(b->size);
+	--(a->size);
+	ft_putstr("pb\n");
+	return (1);
 }
 
-void	command_rotate(t_stack *stack)
+void	do_rotate(t_stack *stack)
 {
 	t_node	*top;
 	t_node	*tmp;
@@ -277,26 +312,28 @@ void	command_rotate(t_stack *stack)
 	top->next = NULL;
 }
 
-void	command_ra(t_stack *stack_a)
+int		do_ra(t_stack *a)
 {
-	command_rotate(stack_a);
-	write(1, "ra\n", 3);
+	do_rotate(a);
+	ft_putstr("ra\n");
+	return (1);
 }
 
-void	command_rb(t_stack *stack_b)
+int		do_rb(t_stack *b)
 {
-	command_rotate(stack_b);
-	write(1, "rb\n", 3);
+	do_rotate(b);
+	ft_putstr("rb\n");
+	return (1);
 }
 
-void	command_rr(t_stack *stack_a, t_stack *stack_b)
+void	do_rr(t_stack *a, t_stack *b)
 {
-	command_rotate(stack_a);
-	command_rotate(stack_b);
-	write(1, "rr\n", 3);
+	do_rotate(a);
+	do_rotate(b);
+	ft_putstr("rr\n");
 }
 
-void	command_reverse_rotate(t_stack *stack)
+void	do_reverse_rotate(t_stack *stack)
 {
 	t_node *top;
 	t_node *tmp;
@@ -313,23 +350,23 @@ void	command_reverse_rotate(t_stack *stack)
 	stack->head = tmp;
 }
 
-void	command_rra(t_stack *stack_a)
+void	do_rra(t_stack *a)
 {
-	command_reverse_rotate(stack_a);
-	write(1, "rra\n", 4);
+	do_reverse_rotate(a);
+	ft_putstr("rra\n");
 }
 
-void	command_rrb(t_stack *stack_b)
+void	do_rrb(t_stack *b)
 {
-	command_reverse_rotate(stack_b);
-	write(1, "rrb\n", 4);
+	do_reverse_rotate(b);
+	ft_putstr("rrb\n");
 }
 
-void	command_rrr(t_stack *stack_a, t_stack *stack_b)
+void	do_rrr(t_stack *a, t_stack *b)
 {
-	command_reverse_rotate(stack_a);
-	command_reverse_rotate(stack_b);
-	write(1, "rrr\n", 4);
+	do_reverse_rotate(a);
+	do_reverse_rotate(b);
+	ft_putstr("rrr\n");
 }
 
 //---------------------------------------------------------------------------function
@@ -345,6 +382,17 @@ void	init_stack(t_stack *stack)
 {
 	stack->head = NULL;
 	stack->size = 0;
+}
+
+void	init_part(t_part *part)
+{
+	part->half_pivot = 0;
+	part->one_third_pivot = 0;
+	part->two_third_pivot = 0;
+	part->pa_count = 0;
+	part->pb_count = 0;
+	part->ra_count = 0;
+	part->rb_count = 0;
 }
 
 int		is_duplicated_data(t_stack *stack, int data)
@@ -427,7 +475,7 @@ t_stack	*make_stack_a(int ac, char *av[])
 	int		i;
 
 	if (!(stack = (t_stack *)malloc(sizeof(t_stack))))
-		error();
+		print_error();
 	init_stack(stack);
 	i = 1;
 	while (i < ac)
@@ -441,10 +489,132 @@ t_stack	*make_stack_a(int ac, char *av[])
 	return (stack);
 }
 
+int		is_sorted(t_stack *stack, int len, int order)
+{
+	t_node	*node;
+	int		prev;
+	int		i;
 
-void	push_swap(t_stack *stack_a, t_stack *stack_b)
+	if (stack == NULL || stack->head == NULL)
+		return (0);
+	node = stack->head;
+	prev = node->data;
+	node = node->next;
+	i = 1;
+	while (i < len)
+	{
+		if (order == ASC && node->data < prev)
+			return (0);
+		if (order == DESC && node->data > prev)
+			return (0);
+		prev = node->data;
+		node = node->next;
+		++i;
+	}
+	return (1);
+}
+
+static int	partition(int arr[], int left, int right)
+{
+	int		pivot;
+	int		tmp;
+
+	pivot = arr[(left + right) / 2];
+	while (left < right)
+	{
+		while ((arr[left] < pivot) && (left < right))
+			++left;
+		while ((arr[right] > pivot) && (left < right))
+			--right;
+		if (left < right)
+		{
+			tmp = arr[left];
+			arr[left] = arr[right];
+			arr[right] = tmp;
+		}
+	}
+	return (left);
+}
+
+static void	quicksort(int arr[], int left, int right)
+{
+	int 	pivot;
+	
+	if (left < right)
+	{
+		pivot = partition(arr, left, right);
+		quicksort(arr, left, pivot - 1);
+		quicksort(arr, pivot + 1, right);
+	}
+}
+
+void		make_pivot(int len, t_stack *stack, t_part *part)
+{
+	t_node	*node;
+	int		arr[len];
+	int		i;
+
+	node = stack->head;
+	i = 0;
+	while (i < len)
+	{
+		arr[i++] = node->data;
+		node = node->next;
+	}
+	quicksort(arr, 0, len - 1);
+	part->half_pivot = arr[len / 2];
+	part->one_third_pivot = arr[len / 3];
+	part->two_third_pivot = arr[len / 3 * 2];
+}
+
+void	work_b(int len, t_stack *a, t_stack *b, t_part *part)
 {
 	
+}
+
+void	work_a(int len, t_stack *a, t_stack *b, t_part *part)
+{
+	if (len == 1 || is_sorted(a, len, ASC))
+		return ;
+	else if (len == 2)
+		do_sa(a);
+	/*
+	else if (len == 3)
+	else if (len == 5)
+	*/
+	else
+	{
+		init_part(part);
+		make_pivot(len, a, part);
+		while (--len >= 0)
+		{
+			//등호와 부등호의 차이 실험해보기
+			if (a->head->data >= part->two_third_pivot)
+				part->ra_count += do_ra(a);
+			else
+			{
+				part->pb_count += do_pb(a, b);
+				if (a->head->data >= part->one_third_pivot)
+					part->rb_count += do_rb(b);
+			}
+		}
+		//rrr
+	}
+	work_a(part->ra_count, a, b, part);
+	work_b(part->rb_count, a, b, part);
+	work_b(part->pb_count - part->rb_count, a, b, part);
+}
+
+void	push_swap(t_stack *a, t_stack *b)
+{
+	t_part *part;
+
+	if (a->size == 0)
+		return ;
+	if (!(part = (t_part *)malloc(sizeof(t_part))))
+		print_error();
+	work_a(a->size, a, b, part);
+	free(part);
 }
 
 
@@ -457,10 +627,14 @@ int		main(int ac, char *av[])
 
 	stack_a = make_stack_a(ac, av);
 	if (!(stack_b = (t_stack *)malloc(sizeof(t_stack))))
-		error();
+		print_error();
 	init_stack(stack_b);
 
-	push_swap(stack_a, stack_b);
+
+
+
+	//push_swap(stack_a, stack_b);
+
 	/*
 	//-------------------------------------
 	command_reverse_rotate(stack_a);
