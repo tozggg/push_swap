@@ -6,7 +6,7 @@
 /*   By: taejkim <taejkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 14:58:15 by taejkim           #+#    #+#             */
-/*   Updated: 2021/01/14 21:49:53 by taejkim          ###   ########.fr       */
+/*   Updated: 2021/06/28 20:43:24 by taejkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	int		i;
 	int		j;
 
-	if (s1 == NULL && s2 == NULL)
-		return (NULL);
 	if (s1 == NULL || s2 == NULL)
-		return ((s1 != NULL) ? ft_strdup(s1) : ft_strdup(s2));
+		return (NULL);
 	len = ft_strlen(s1) + ft_strlen(s2);
 	ptr = (char *)malloc(sizeof(char) * (len + 1));
 	if (!ptr)

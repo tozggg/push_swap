@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   "push_swap.h"                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: taejkim <taejkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -15,7 +15,7 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-# include "../libft/libft.h"
+# include "libft.h"
 
 # define ASC 1
 # define DESC 0
@@ -78,8 +78,8 @@ void	work_a_five_stack(t_stack *a, t_stack *b);
 void	work_b(int len, t_stack *a, t_stack *b);
 void	work_a(int len, t_stack *a, t_stack *b);
 
-void	push_swap(t_stack *a, t_stack *b);
-
 t_stack	*make_stack_a(int ac, char *av[]);
+
+void	push_swap(t_stack *a, t_stack *b);
 
 #endif

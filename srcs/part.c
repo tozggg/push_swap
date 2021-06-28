@@ -6,11 +6,11 @@
 /*   By: taejkim <taejkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 15:09:10 by taejkim           #+#    #+#             */
-/*   Updated: 2021/06/28 16:21:43 by taejkim          ###   ########.fr       */
+/*   Updated: 2021/06/28 20:16:54 by taejkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
+#include "push_swap.h"
 
 int		is_sorted(t_stack *stack, int len, int order)
 {

@@ -6,11 +6,11 @@
 /*   By: taejkim <taejkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 14:57:35 by taejkim           #+#    #+#             */
-/*   Updated: 2021/06/28 17:18:54 by taejkim          ###   ########.fr       */
+/*   Updated: 2021/06/28 20:16:54 by taejkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
+#include "push_swap.h"
 
 static void	rotate(t_stack *stack)
 {

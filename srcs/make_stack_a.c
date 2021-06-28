@@ -6,11 +6,11 @@
 /*   By: taejkim <taejkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 15:14:47 by taejkim           #+#    #+#             */
-/*   Updated: 2021/06/28 17:03:59 by taejkim          ###   ########.fr       */
+/*   Updated: 2021/06/28 20:16:54 by taejkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
+#include "push_swap.h"
 
 static int	is_duplicated_data(t_stack *stack, int data)
 {
