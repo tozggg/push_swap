@@ -6,7 +6,7 @@
 /*   By: taejkim <taejkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 19:36:51 by taejkim           #+#    #+#             */
-/*   Updated: 2021/06/28 17:14:07 by taejkim          ###   ########.fr       */
+/*   Updated: 2021/06/28 18:49:53 by taejkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static void	get_split_parent(char **ptr, char const *s, char c)
 	ptr[index] = 0;
 }
 
-static void	free_split(char **ptr)
+void		free_split(char **ptr)
 {
 	int i;
 
