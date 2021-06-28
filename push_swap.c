@@ -6,7 +6,7 @@
 /*   By: taejkim <taejkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 20:40:31 by taejkim           #+#    #+#             */
-/*   Updated: 2021/06/26 09:59:13 by taejkim          ###   ########.fr       */
+/*   Updated: 2021/06/28 11:15:23 by taejkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -567,21 +567,201 @@ void		make_pivot(int len, t_stack *stack, t_part *part)
 	part->two_third_pivot = arr[len / 3 * 2];
 }
 
+// 이거 rra를 ra로 바꾸는 알고리즘?
+void	undo_part(t_stack *a, t_stack *b, t_part *part)
+{
+	int rra;
+	int rrb;
+
+	rra = 0;
+	rrb = 0;
+	while ((rra <= part->ra_count) && (rrb <= part->rb_count))
+	{
+		do_rrr(a, b);
+		++rra;
+		++rrb;
+	}
+	while (rra <= part->ra_count)
+	{
+		do_rra(a);
+		++rra;
+	}
+	while(rrb <= part->rb_count)
+	{
+		do_rrb(b);
+		++rrb;
+	}
+}
+
+void	pa_part(int len, stack_t *a, stack_t *b)
+{
+	int i;
+
+	i = 0;
+	while (i < len)
+	{
+		do_pa(a, b);
+		++i;
+	}
+}
+
+static void b_part_123(t_stack *b)
+{
+	do_sb(b);
+	do_rb(b);
+	do_sb(b);
+	do_rrb(b);
+	do_sb(b);
+}
+
+static void	b_part_132(t_stack *b)
+{
+	do_sb(b);
+	do_rb(b);
+	do_sb(b);
+	do_rrb(b);
+}
+
+static void	b_part_213(t_stack *b)
+{
+	do_rb(b);
+	do_sb(b);
+	do_rrb(b);
+	do_sb(b);
+}
+
+static void	b_part_312(t_stack *b)
+{
+	do_rb(b);
+	do_sb(b);
+	do_rrb(b);
+}
+
+void		work_b_three_part(t_stack *b)
+{
+	int		d1;
+	int		d2;
+	int		d3;
+
+	d1 = b->head->data;
+	d2 = b->head->next->data;
+	d3 = b->head->next->next->data;
+	if (d1 <d2 && d2 < d3 && d1 < d3)
+		b_part_123(b);
+	if (d1 < d2 && d2 > d3 && d1 < d3)
+		b_part_132(b);
+	if (d1 > d2 && d2 < d3 && d1 < d3)
+		b_part_213(b);
+	if (d1 < d2 && d2 > d3 && d1 > d3)
+		do_sb(b);
+	if (d1 > d2 && d2 < d3 && d1 < d3)
+		b_part_312(b);
+}
+
+void	work_b_small_part(int len, stack_t *a, stack_t *b)
+{
+	if (len == 2)
+		do_sb(b);
+	if (len == 3)
+		work_b_three_part(b);
+	pa_part(len, a, b);
+}
+
 void	work_b(int len, t_stack *a, t_stack *b, t_part *part)
 {
-	
+	if (len == 0 || len == 1 || is_sorted(b, len, DESC))
+		return (pa_part(len, a, b));
+	else if (len == 2 || len == 3)
+		work_b_small_part(len, a, b);
+	else
+	{
+		init_part(part);
+		make_pivot(len, a, part);
+		while (--len >= 0)
+		{
+			if (b->head->data <= part->one_third_pivot)
+				part->rb_count += do_rb(b);
+			else
+			{
+				part->pa_count += do_pa(a, b);
+				if (a->head->data <= part->two_third_pivot)
+					part->ra_count += do_ra(a);
+			}
+		}
+		undo_part(a, b, part);
+	}
+	work_a(part->ra_count, a, b, part);
+	work_a(part->pa_count - part->ra_count, a, b, part);
+	work_b(part->rb_count, a, b, part);
+}
+
+static void	a_part_132(t_stack *a)
+{
+	do_ra(a);
+	do_sa(a);
+	do_rra(a);
+}
+
+static void	a_part_231(t_stack *a)
+{
+	do_ra(a);
+	do_sa(a);
+	do_rra(a);
+	do_sa(a);
+}
+
+static void	a_part_312(t_stack *a)
+{
+	do_sa(a);
+	do_ra(a);
+	do_sa(a);
+	do_rra(a);
+}
+
+static void	a_part_321(t_stack *a)
+{
+	do_sa(a);
+	do_ra(a);
+	do_sa(a);
+	do_rra(a);
+	do_sa(a);
+}
+
+void		work_a_three_part(t_stack *a)
+{
+	int		d1;
+	int		d2;
+	int		d3;
+
+	d1 = a->head->data;
+	d2 = a->head->next->data;
+	d3 = a->head->next->next->data;
+	if (d1 < d2 && d2 > d3 && d1 < d3)
+		a_part_132(a);
+	if (d1 > d2 && d2 < d3 && d1 < d3)
+		do_sa(a);
+	if (d1 < d2 && d2 > d3 && d1 > d3)
+		a_part_213(a);
+	if (d1 > d2 && d2 < d3 && d1 < d3)
+		a_part_312(a);
+	if (d1 > d2 && d2 > d3 && d1 > d3)
+		a_part_321(a);
+}
+
+void	work_a_small_part(int len , t_stack *a, t_stack *b)
+{
+	if (len == 2)
+		do_sa(a);
+	if (len == 3)
+		work_a_three_part(a);
 }
 
 void	work_a(int len, t_stack *a, t_stack *b, t_part *part)
 {
-	if (len == 1 || is_sorted(a, len, ASC))
+	if (len == 0 || len == 1 || is_sorted(a, len, ASC))
 		return ;
-	else if (len == 2)
-		do_sa(a);
-	/*
-	else if (len == 3)
-	else if (len == 5)
-	*/
+	else if (len == 2 || len == 3)
+		work_a_small_part(len, a, b);
 	else
 	{
 		init_part(part);
@@ -594,26 +774,98 @@ void	work_a(int len, t_stack *a, t_stack *b, t_part *part)
 			else
 			{
 				part->pb_count += do_pb(a, b);
-				if (a->head->data >= part->one_third_pivot)
+				if (b->head->data >= part->one_third_pivot)
 					part->rb_count += do_rb(b);
 			}
 		}
-		//rrr
+		undo_part(a, b, part);
 	}
 	work_a(part->ra_count, a, b, part);
 	work_b(part->rb_count, a, b, part);
 	work_b(part->pb_count - part->rb_count, a, b, part);
 }
 
+static void	a_stack_132(t_stack *a)
+{
+	do_sa(a);
+	do_ra(a);
+}
+
+static void	a_stack_231(t_stack *a)
+{
+	do_rra(a);
+}
+
+static void	a_stack_312(t_stack *a)
+{
+	do_ra(a);
+}
+
+static void	a_stack_321(t_stack *a)
+{
+	do_sa(a);
+	do_rra(a);
+}
+
+void	work_a_three_stack(t_stack *a)
+{
+	int		d1;
+	int		d2;
+	int		d3;
+
+	d1 = a->head->data;
+	d2 = a->head->next->data;
+	d3 = a->head->next->next->data;
+	if (d1 < d2 && d2 < d3 && d1 < d3)
+		return ;
+	if (d1 < d2 && d2 > d3 && d1 < d3)
+		a_stack_132(a);
+	if (d1 > d2 && d2 < d3 && d1 < d3)
+		do_sa(a);
+	if (d1 < d2 && d2 > d3 && d1 > d3)
+		a_stack_213(a);
+	if (d1 > d2 && d2 < d3 && d1 < d3)
+		a_stack_312(a);
+	if (d1 > d2 && d2 > d3 && d1 > d3)
+		a_stack_321(a);
+}
+
+void	work_a_five_stack(t_stack *a, t_stack *b, t_part *part)
+{
+	int		mid;
+	int		i;
+
+	if (is_sorted(a, 5, ASC))
+		return ;
+	init_part(part);
+	make_pivot(5, a, part);
+	mid = part->half_pivot;
+	i = 0;
+	while (i < 5)
+	{
+		if (a->head->data < mid)
+			do_pb(a, b);
+		else
+			do_ra(a);
+	}
+	work_a_three_stack(a);
+	if (!is_sorted(b, 2, DESC))
+		do_sb(b);
+	pa_part(2, a, b);
+}
+
 void	push_swap(t_stack *a, t_stack *b)
 {
-	t_part *part;
+	t_part	*part;
 
-	if (a->size == 0)
-		return ;
 	if (!(part = (t_part *)malloc(sizeof(t_part))))
 		print_error();
-	work_a(a->size, a, b, part);
+	if (a->size == 3)
+		work_a_three_stack(a);
+	else if (a->size == 5)
+		work_a_five_stack(a, b, part);
+	else
+		work_a(a->size, a, b, part);
 	free(part);
 }
 
@@ -633,7 +885,7 @@ int		main(int ac, char *av[])
 
 
 
-	//push_swap(stack_a, stack_b);
+	push_swap(stack_a, stack_b);
 
 	/*
 	//-------------------------------------
