@@ -6,7 +6,7 @@
 /*   By: taejkim <taejkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 15:02:47 by taejkim           #+#    #+#             */
-/*   Updated: 2021/06/28 20:16:54 by taejkim          ###   ########.fr       */
+/*   Updated: 2021/06/29 07:00:33 by taejkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ static int	partition(int arr[], int left, int right)
 
 static void	quicksort(int arr[], int left, int right)
 {
-	int 	pivot;
-	
+	int		pivot;
+
 	if (left < right)
 	{
 		pivot = partition(arr, left, right);

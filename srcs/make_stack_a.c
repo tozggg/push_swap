@@ -6,7 +6,7 @@
 /*   By: taejkim <taejkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 15:14:47 by taejkim           #+#    #+#             */
-/*   Updated: 2021/06/28 20:16:54 by taejkim          ###   ########.fr       */
+/*   Updated: 2021/06/29 06:59:30 by taejkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,12 @@ static int	ft_atoi_check(char *str, t_stack *stack, char **split)
 			res = (res * 10) + (str[i] - '0');
 		else
 			free_and_error(stack, split);
-		if ((pos == 1 && res > 2147483647) \
-				|| (pos == -1 && res > 2147483648))
+		if ((pos == 1 && res > 2147483647) || (pos == -1 && res > 2147483648))
 			free_and_error(stack, split);
 		++i;
 	}
-	if (is_duplicated_data(stack, res))
-			free_and_error(stack, split);
+	if (is_duplicated_data(stack, (int)(res * pos)))
+		free_and_error(stack, split);
 	return ((int)(res * pos));
 }
 
@@ -102,6 +101,5 @@ t_stack		*make_stack_a(int ac, char *av[])
 		free_split(split);
 		++i;
 	}
-	
 	return (stack);
 }

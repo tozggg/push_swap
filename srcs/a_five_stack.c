@@ -6,7 +6,7 @@
 /*   By: taejkim <taejkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 15:08:05 by taejkim           #+#    #+#             */
-/*   Updated: 2021/06/28 20:10:15 by taejkim          ###   ########.fr       */
+/*   Updated: 2021/06/29 06:50:39 by taejkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	work_a_five_stack(t_stack *a, t_stack *b)
 {
-	t_part *part;
+	t_part	*part;
 	int		mid;
 	int		i;
 

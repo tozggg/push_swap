@@ -6,7 +6,7 @@
 /*   By: taejkim <taejkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 15:10:52 by taejkim           #+#    #+#             */
-/*   Updated: 2021/06/28 20:26:28 by taejkim          ###   ########.fr       */
+/*   Updated: 2021/06/29 07:00:53 by taejkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,5 @@ int		main(int ac, char *av[])
 	push_swap(a, b);
 	free_stack(a);
 	free_stack(b);
-	//system("leaks a.out");
 	return (0);
 }

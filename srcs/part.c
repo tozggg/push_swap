@@ -6,7 +6,7 @@
 /*   By: taejkim <taejkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 15:09:10 by taejkim           #+#    #+#             */
-/*   Updated: 2021/06/28 20:16:54 by taejkim          ###   ########.fr       */
+/*   Updated: 2021/06/29 07:00:05 by taejkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int		is_sorted(t_stack *stack, int len, int order)
 	return (1);
 }
 
-t_part	*make_part()
+t_part	*make_part(void)
 {
 	t_part	*part;
 
@@ -71,7 +71,7 @@ void	undo_part(t_stack *a, t_stack *b, t_part *part)
 		rra(a);
 		++ra;
 	}
-	while(rb < part->rb_count)
+	while (rb < part->rb_count)
 	{
 		rrb(b);
 		++rb;

@@ -6,7 +6,7 @@
 /*   By: taejkim <taejkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 15:00:19 by taejkim           #+#    #+#             */
-/*   Updated: 2021/06/28 20:16:54 by taejkim          ###   ########.fr       */
+/*   Updated: 2021/06/29 07:01:35 by taejkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	free_and_error(t_stack *stack, char **split)
 	free_stack(stack);
 	error_out();
 }
-
 
 void	init_node(t_node *node)
 {

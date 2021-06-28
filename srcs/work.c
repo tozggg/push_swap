@@ -6,7 +6,7 @@
 /*   By: taejkim <taejkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 20:40:31 by taejkim           #+#    #+#             */
-/*   Updated: 2021/06/28 20:54:55 by taejkim          ###   ########.fr       */
+/*   Updated: 2021/06/29 07:02:00 by taejkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void		work_b(int len, t_stack *a, t_stack *b)
 	free(part);
 }
 
-static void	work_a_small_part(int len , t_stack *a)
+static void	work_a_small_part(int len, t_stack *a)
 {
 	if (len == 2)
 		sa(a);
@@ -60,7 +60,7 @@ static void	work_a_small_part(int len , t_stack *a)
 void		work_a(int len, t_stack *a, t_stack *b)
 {
 	t_part *part;
-	
+
 	if (len == 0 || len == 1 || is_sorted(a, len, ASC))
 		return ;
 	if (len == 2 || len == 3)

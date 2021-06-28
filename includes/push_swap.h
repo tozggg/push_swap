@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   "push_swap.h"                                        :+:      :+:    :+:   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: taejkim <taejkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/25 23:18:10 by taejkim           #+#    #+#             */
-/*   Updated: 2021/06/28 17:20:06 by taejkim          ###   ########.fr       */
+/*   Created: 2021/06/29 06:46:30 by taejkim           #+#    #+#             */
+/*   Updated: 2021/06/29 06:49:47 by taejkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,42 +44,42 @@ typedef struct		s_part
 	int				rb_count;
 }					t_part;
 
-void	error_out(void);
-void	free_stack(t_stack *stack);
-void	free_and_error(t_stack *stack, char **split);
+void				error_out(void);
+void				free_stack(t_stack *stack);
+void				free_and_error(t_stack *stack, char **split);
 
-void	init_stack(t_stack *stack);
-void	init_node(t_node *node);
+void				init_stack(t_stack *stack);
+void				init_node(t_node *node);
 
-int		pa(t_stack *a, t_stack *b);
-int		pb(t_stack *a, t_stack *b);
-void	sa(t_stack *a);
-void	sb(t_stack *b);
-void	ss(t_stack *a, t_stack *b);
-int		ra(t_stack *a);
-int		rb(t_stack *b);
-void	rr(t_stack *a, t_stack *b);
-void	rra(t_stack *a);
-void	rrb(t_stack *b);
-void	rrr(t_stack *a, t_stack *b);
+int					pa(t_stack *a, t_stack *b);
+int					pb(t_stack *a, t_stack *b);
+void				sa(t_stack *a);
+void				sb(t_stack *b);
+void				ss(t_stack *a, t_stack *b);
+int					ra(t_stack *a);
+int					rb(t_stack *b);
+void				rr(t_stack *a, t_stack *b);
+void				rra(t_stack *a);
+void				rrb(t_stack *b);
+void				rrr(t_stack *a, t_stack *b);
 
-void	make_pivot(int len, t_stack *stack, t_part *part);
-t_part	*make_part();
-void	undo_part(t_stack *a, t_stack *b, t_part *part);
-void	pa_part(int len, t_stack *a, t_stack *b);
+void				make_pivot(int len, t_stack *stack, t_part *part);
+t_part				*make_part();
+void				undo_part(t_stack *a, t_stack *b, t_part *part);
+void				pa_part(int len, t_stack *a, t_stack *b);
 
-int		is_sorted(t_stack *stack, int len, int order);
+int					is_sorted(t_stack *stack, int len, int order);
 
-void	work_a_three_part(t_stack *a);
-void	work_b_three_part(t_stack *b);
-void	work_a_three_stack(t_stack *a);
-void	work_a_five_stack(t_stack *a, t_stack *b);
+void				work_a_three_part(t_stack *a);
+void				work_b_three_part(t_stack *b);
+void				work_a_three_stack(t_stack *a);
+void				work_a_five_stack(t_stack *a, t_stack *b);
 
-void	work_b(int len, t_stack *a, t_stack *b);
-void	work_a(int len, t_stack *a, t_stack *b);
+void				work_a(int len, t_stack *a, t_stack *b);
+void				work_b(int len, t_stack *a, t_stack *b);
 
-t_stack	*make_stack_a(int ac, char *av[]);
+t_stack				*make_stack_a(int ac, char *av[]);
 
-void	push_swap(t_stack *a, t_stack *b);
+void				push_swap(t_stack *a, t_stack *b);
 
 #endif
