@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   part.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taejkim <taejkim@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: taejkim <taejkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 15:09:10 by taejkim           #+#    #+#             */
-/*   Updated: 2021/06/29 07:00:05 by taejkim          ###   ########.fr       */
+/*   Updated: 2021/06/29 20:08:56 by taejkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_part	*make_part(void)
 
 	if (!(part = (t_part *)malloc(sizeof(t_part))))
 		error_out();
-	part->half_pivot = 0;
+	part->mid = 0;
 	part->one_third_pivot = 0;
 	part->two_third_pivot = 0;
 	part->pa_count = 0;

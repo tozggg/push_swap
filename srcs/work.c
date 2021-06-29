@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   work.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taejkim <taejkim@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: taejkim <taejkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 20:40:31 by taejkim           #+#    #+#             */
-/*   Updated: 2021/06/29 07:02:00 by taejkim          ###   ########.fr       */
+/*   Updated: 2021/06/29 21:11:14 by taejkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ void		work_b(int len, t_stack *a, t_stack *b)
 
 	if (len == 0 || len == 1 || is_sorted(b, len, DESC))
 		return (pa_part(len, a, b));
-	if (len == 2 || len == 3)
+	else if (len == 2 || len == 3)
 		return (work_b_small_part(len, a, b));
 	part = make_part();
-	make_pivot(len, a, part);
+	make_pivot(len, b, part);
 	while (--len >= 0)
 	{
 		if (b->head->data < part->one_third_pivot)
@@ -63,18 +63,18 @@ void		work_a(int len, t_stack *a, t_stack *b)
 
 	if (len == 0 || len == 1 || is_sorted(a, len, ASC))
 		return ;
-	if (len == 2 || len == 3)
+	else if (len == 2 || len == 3)
 		return (work_a_small_part(len, a));
 	part = make_part();
 	make_pivot(len, a, part);
 	while (--len >= 0)
 	{
-		if (a->head->data >= part->two_third_pivot)
+		if (a->head->data > part->two_third_pivot)
 			part->ra_count += ra(a);
 		else
 		{
 			part->pb_count += pb(a, b);
-			if (b->head->data >= part->one_third_pivot)
+			if (b->head->data > part->one_third_pivot)
 				part->rb_count += rb(b);
 		}
 	}

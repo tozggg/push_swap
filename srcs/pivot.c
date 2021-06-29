@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pivot.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taejkim <taejkim@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: taejkim <taejkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 15:02:47 by taejkim           #+#    #+#             */
-/*   Updated: 2021/06/29 07:00:33 by taejkim          ###   ########.fr       */
+/*   Updated: 2021/06/29 21:11:05 by taejkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void		make_pivot(int len, t_stack *stack, t_part *part)
 		node = node->next;
 	}
 	quicksort(arr, 0, len - 1);
-	part->half_pivot = arr[len / 2];
+	part->mid = arr[len / 2];
 	part->one_third_pivot = arr[len / 3];
 	part->two_third_pivot = arr[len / 3 * 2];
 }

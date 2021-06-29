@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taejkim <taejkim@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: taejkim <taejkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 06:46:30 by taejkim           #+#    #+#             */
-/*   Updated: 2021/06/29 06:49:47 by taejkim          ###   ########.fr       */
+/*   Updated: 2021/06/29 20:09:12 by taejkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct		s_node
 
 typedef struct		s_part
 {
-	int				half_pivot;
+	int				mid;
 	int				one_third_pivot;
 	int				two_third_pivot;
 	int				pa_count;

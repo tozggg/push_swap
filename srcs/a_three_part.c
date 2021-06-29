@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   a_three_part.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taejkim <taejkim@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: taejkim <taejkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 15:06:09 by taejkim           #+#    #+#             */
-/*   Updated: 2021/06/28 20:16:54 by taejkim          ###   ########.fr       */
+/*   Updated: 2021/06/29 17:41:00 by taejkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void		work_a_three_part(t_stack *a)
 		sa(a);
 	if (d1 < d2 && d2 > d3 && d1 > d3)
 		a_part_231(a);
-	if (d1 > d2 && d2 < d3 && d1 < d3)
+	if (d1 > d2 && d2 < d3 && d1 > d3)
 		a_part_312(a);
 	if (d1 > d2 && d2 > d3 && d1 > d3)
 		a_part_321(a);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   a_five_stack.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taejkim <taejkim@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: taejkim <taejkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 15:08:05 by taejkim           #+#    #+#             */
-/*   Updated: 2021/06/29 06:50:39 by taejkim          ###   ########.fr       */
+/*   Updated: 2021/06/29 19:10:41 by taejkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	work_a_five_stack(t_stack *a, t_stack *b)
 		return ;
 	part = make_part();
 	make_pivot(5, a, part);
-	mid = part->half_pivot;
+	mid = part->mid;
 	i = 0;
 	while (i < 5)
 	{
